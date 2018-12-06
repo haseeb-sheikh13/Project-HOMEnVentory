@@ -25,6 +25,11 @@ public class LoginServlet extends HttpServlet
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
     {
+        if(request.getParameter("registration") !=null)
+        {
+            getServletContext().getRequestDispatcher("/WEB-INF/registration.jsp").forward(request, response);
+            return;
+        }
         getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
     }
 
@@ -37,29 +42,39 @@ public class LoginServlet extends HttpServlet
         HttpSession session = request.getSession();
  
         UserService us = new UserService();
-        User user = us.loginService(username, password);      
-        if(user != null)
+        User user = us.loginService(username, password);  
+        if(!(username == null || username.equals("")) && !(password == null || password.equals("")))
         {
-            if((user.getActive() == true  && user.getIsAdmin() == true))
+                
+            if(user != null)
             {
-                session.setAttribute("username", username);
-                response.sendRedirect("admin");
-            }
-            else if(user.getActive() == true  && user.getIsAdmin() == false)
-            {
-                session.setAttribute("username", username);
-                response.sendRedirect("inventory");
+                if((user.getActive() == true  && user.getIsAdmin() == true))
+                {
+                    session.setAttribute("username", username);
+                    response.sendRedirect("admin");
+                }
+                else if(user.getActive() == true  && user.getIsAdmin() == false)
+                {
+                    session.setAttribute("username", username);
+                    response.sendRedirect("inventory");
+                }
+                else
+                {
+                    request.setAttribute("inactiveM", "Your account has been deactivated, please register a new account.");
+                    getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);       
+                }   
             }
             else
             {
-                request.setAttribute("inactiveM", "Your account has been deactivated, please register a new account.");
-                getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);       
-            }   
+                request.setAttribute("errorM", "User does not exist.");
+                getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+            }
         }
         else
         {
-            request.setAttribute("errorM", "Error");
+            request.setAttribute("errorM", "Please enter your username or password.");
             getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
         }
+        
     }
 }

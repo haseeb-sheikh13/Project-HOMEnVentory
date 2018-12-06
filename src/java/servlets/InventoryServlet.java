@@ -19,6 +19,7 @@ import model.Category;
 import model.Item;
 import model.User;
 import services.InventoryService;
+import services.UserService;
 
 /**
  *
@@ -26,21 +27,32 @@ import services.InventoryService;
  */
 public class InventoryServlet extends HttpServlet 
 {
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         HttpSession session = request.getSession();
         
+        User user = new User();
         InventoryService is = new InventoryService();
-        List<Category> categories = null;        
-        try 
+        
+        String action = request.getParameter("action");
+        if (action != null && action.equals("edit")) 
         {
-            categories = is.getAllCategories(); 
-        } 
-        catch (Exception ex) 
-        {
-            Logger.getLogger(AdminServlet.class.getName()).log(Level.SEVERE, null, ex);
+            try
+            {
+                String itemSelected = request.getParameter("itemSelected");
+                int itemSelect = Integer.parseInt(itemSelected);
+                Item item = is.getItem(itemSelect);
+                session.setAttribute("itemSelected", item);
+                getServletContext().getRequestDispatcher("/WEB-INF/inventory.jsp").forward(request, response);
+            }
+            catch(Exception ex)
+            {
+                Logger.getLogger(InventoryServlet.class.getName()).log(Level.SEVERE, null, ex);
+                getServletContext().getRequestDispatcher("/WEB-INF/inventory.jsp").forward(request, response);
+            }
+            
         }
-        session.setAttribute("categories", categories);
         
         List<Item> items = null;    
         try 
@@ -49,35 +61,52 @@ public class InventoryServlet extends HttpServlet
         } 
         catch (Exception ex) 
         {
-            Logger.getLogger(AdminServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InventoryServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         session.setAttribute("items", items);
-
+        
+        List<Category> categories = null;        
+        try 
+        {
+            categories = is.getAllCategories(); 
+        } 
+        catch (Exception ex) 
+        {
+            Logger.getLogger(InventoryServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        session.setAttribute("categories", categories);
+        
+        if(request.getParameter("admin") !=null)
+        {
+            try
+            {
+                String username = (String) session.getAttribute("username");
+                UserService us = new UserService();
+                user = us.get(username);
+                if(user.getIsAdmin() == true)
+                {
+                    session.setAttribute("username", username);
+                    getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
+                    return;
+                }
+                else
+                {
+                    request.setAttribute("adminM", "Unauthorized User.");
+                    getServletContext().getRequestDispatcher("/WEB-INF/inventory.jsp").forward(request, response);
+                }            
+            }
+            catch(Exception ex)
+            {
+                Logger.getLogger(InventoryServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         if(request.getParameter("logout") !=null)
         {
             session.invalidate();
             request.setAttribute("logM", "You have been logged out.");
             getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
-            return;
         }
-        
-        User user = new User();
-        if(request.getParameter("admin") !=null)
-        {
-            if(user.getIsAdmin() == true)
-            {
-                session.invalidate();
-                response.sendRedirect("admin");
-                 
-                return;
-            }
-            else
-            {
-                request.setAttribute("adminM", "Unauthorized User.");
-                getServletContext().getRequestDispatcher("/WEB-INF/inventory.jsp").forward(request, response);
-            }
-            
-        }
+
         getServletContext().getRequestDispatcher("/WEB-INF/inventory.jsp").forward(request, response);
     }
 
@@ -85,14 +114,22 @@ public class InventoryServlet extends HttpServlet
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
     {
         HttpSession session = request.getSession();
+        
         String username = (String) session.getAttribute("username");
         
         String action = request.getParameter("action");
         String itemCategory = request.getParameter("itemCategory");
         String itemName = request.getParameter("itemName");
         String itemPrice = request.getParameter("itemPrice");
-        InventoryService is = new InventoryService();
+        
+        int categoryID;
+        int itemID;
+        double price;
+        
         User user = new User();
+        Item item = new Item();
+        
+        InventoryService is = new InventoryService();
         try 
         {
             switch (action)
@@ -102,15 +139,16 @@ public class InventoryServlet extends HttpServlet
                             && !(itemPrice == null || itemPrice.equals("")))
                     {
                         List<Item> items = (List) session.getAttribute("items");
-                        int categoryID = Integer.parseInt(itemCategory);
+                        categoryID = Integer.parseInt(itemCategory);
                         Category category = is.getCategory(categoryID);
-                        double price = Double.parseDouble(itemPrice);
+                        price = Double.parseDouble(itemPrice);
                      
-                        Item item = new Item(0, itemName, price);
+                        UserService us = new UserService();
+                        item = new Item(0, itemName, price);
                         item.setCategory(category);
                         
                         user.setUsername(username);
-                        item.setOwner(user);
+                        item.setOwner(us.get(username));
                         is.insertItem(categoryID, itemName, username, price);
                         items.add(item);
                         session.setAttribute("items", items);
@@ -123,28 +161,33 @@ public class InventoryServlet extends HttpServlet
                         getServletContext().getRequestDispatcher("/WEB-INF/inventory.jsp").forward(request, response);
                     }
                     break;
+                case "edit":
+                    String hiddenCat = request.getParameter("hiddenCat");
+                    
+                    itemID = Integer.parseInt(hiddenCat);
+                    categoryID = Integer.parseInt(itemCategory);
+                    price = Double.parseDouble(itemPrice);
+                    
+                    Category category = is.getCategory(categoryID);
+                    
+                    item = is.getItem(itemID);
+                    item.setItemID(itemID);
+                    item.setCategory(category);
+                    item.setItemName(itemName);
+                    item.setPrice(price);
+                    
+                    is.update(itemID, categoryID, itemName, price);
+                    request.setAttribute("editM", "Item has been updated."); 
+                    getServletContext().getRequestDispatcher("/WEB-INF/inventory.jsp").forward(request, response);
+
+                    break;
                 case "delete":
                     String itemSelected = request.getParameter("itemSelected");
                     int itemSelect = Integer.parseInt(itemSelected);
                     is.deleteItem(itemSelect);
                     
                     request.setAttribute("deleteM", "Item has been deleted.");
-                    getServletContext().getRequestDispatcher("/WEB-INF/inventory.jsp").forward(request, response); 
-                    break;
-                case "admin":
-                    if(user.getIsAdmin() == false)
-                    {
-                        request.setAttribute("adminM", "Unauthorized User.");
-                        getServletContext().getRequestDispatcher("/WEB-INF/inventory.jsp").forward(request, response); 
-                    }
-                    else
-                    {
-                        getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
-                    }
-                    break;
-                case "logout":
-                    request.setAttribute("logoutM", "You have been logged out.");
-                    getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+                    response.sendRedirect("inventory");
                     break;
                 default:
                     break;
@@ -153,6 +196,7 @@ public class InventoryServlet extends HttpServlet
         catch (Exception ex) 
         {
             Logger.getLogger(InventoryServlet.class.getName()).log(Level.SEVERE, null, ex);
+            getServletContext().getRequestDispatcher("/WEB-INF/inventory.jsp").forward(request, response);
         }
     }
 }

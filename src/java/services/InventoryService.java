@@ -18,6 +18,9 @@ public class InventoryService
     private ItemsDB itemDB = new ItemsDB();
     private UserDB userDB = new UserDB();
     
+    private User user = new User();
+    private Category category = new Category();
+    private Item item = new Item();
     public InventoryService() 
     {
         catDB = new CategoriesDB();
@@ -35,6 +38,11 @@ public class InventoryService
         return catDB.getCategory(categoryID);
     }
     
+    public Item getItem(int itemID) throws Exception
+    {
+        return itemDB.getItem(itemID);
+    }
+    
     public List<Category> getAllCategories() throws Exception 
     {
         return catDB.getAll();
@@ -45,14 +53,28 @@ public class InventoryService
         return itemDB.getAll();
     }
     
-    public int deleteItem(int itemID) throws Exception {
+    public int update(int itemID, int categoryID, String itemName, double price) 
+            throws Exception 
+    {
+        category = getCategory(categoryID);
+        item = getItem(itemID);
+        item.setItemID(itemID);
+        item.setItemName(itemName);
+        item.setPrice(price);
+        item.setCategory(category);
+        return itemDB.update(item);
+    }
+    
+    public int deleteItem(int itemID) 
+            throws Exception
+    {
         Item itemSelected = itemDB.getItem(itemID);
         return itemDB.delete(itemSelected);
     }
     
-    public int insertItem(int categoryID, String itemName, String username, double price) throws Exception {
-        User user = new User();
-        Category category = new Category();
+    public int insertItem(int categoryID, String itemName, String username, double price) 
+            throws Exception 
+    {
         user.setUsername(username);
         category.setCategoryID(categoryID);
         

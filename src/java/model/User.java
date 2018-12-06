@@ -1,11 +1,12 @@
 package model;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -55,8 +56,8 @@ public class User implements Serializable {
     @Basic(optional = false)
     @Column(name = "IsAdmin")
     private boolean isAdmin;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
-    private Collection<Item> itemCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner", fetch = FetchType.EAGER)
+    private List<Item> itemList;
 
     public User() {
     }
@@ -132,12 +133,12 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Item> getItemCollection() {
-        return itemCollection;
+    public List<Item> getItemList() {
+        return itemList;
     }
 
-    public void setItemCollection(Collection<Item> itemCollection) {
-        this.itemCollection = itemCollection;
+    public void setItemItemList(List<Item> itemList) {
+        this.itemList = itemList;
     }
 
     @Override

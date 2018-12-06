@@ -8,47 +8,38 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<style>
-        table, th, td 
-        {
-            border: 1px solid black;
-        }
+    <style>
+        <%@include file="/WEB-INF/CSS/adminCSS.css"%>
     </style>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>CPRG 352 - Assignment 3 - HomeInventory</title>
+        <title>CPRG 352 - Final Project - HOMEnVentory</title>
     </head>
     <body>
-        <h1>Home Inventory</h1>
-        
-        <h3>Menu</h3>
         <ul>
+            <li><h1>HOMEnVentory</h1></li>
             <li><a href="admin?inventory">Inventory</a></li>
+            <li><a href="admin?categories">Categories</a></li>
             <li><a href="admin?refresh">Refresh</a></li>
             <li><a href="admin?logout">Logout</a></li>
         </ul>
-
+        <h2>Welcome, ${username}</h2>
         <h2>Manage Users</h2>      
-            <table style="width:50%">
+            <table>
                 <tr>
                     <th>Username</th>
                     <th>First Name</th>
                     <th>Last Name</th>
-                    <th>Delete</th>
+                    <th>Active</th>
                     <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
                 <c:forEach var="usr" items="${users}">
                     <tr>
                         <td>${usr.username}</td>
                         <td>${usr.firstName}</td>
                         <td>${usr.lastName}</td>
-                        <td>
-                            <form method="POST" action="admin">
-                                <input type="submit" value="Delete">
-                                <input type="hidden" name="action" value="delete">
-                                <input type="hidden" name="usernameSelected" value="${usr.username}">
-                            </form>
-                        </td>
+                        <td>${usr.active}</td>
                         <td>
                             <form method="GET" action="admin">
                                 <input type="submit" value="Edit">
@@ -56,18 +47,36 @@
                                 <input type="hidden" name="usernameSelected" value="${usr.username}">
                             </form>
                         </td>
+                        <td>
+                            <form method="POST" action="admin">
+                                <input type="submit" value="Delete">
+                                <input type="hidden" name="action" value="delete">
+                                <input type="hidden" name="usernameSelected" value="${usr.username}">
+                            </form>
+                        </td>
                     </tr>
                 </c:forEach>
             </table>
         
+        <div class="userForms">
         <c:if test="${usernameSelected == null}">
             <h2>Add User</h2>
             <form method="POST" action="admin">
-                Username: <input type="text" name="username"><br>
-                Password: <input type="text" name="password"><br>
-                Email: <input type="text" name="email"><br>
-                First Name: <input type="text" name="firstName"><br>
-                Last Name: <input type="text" name="lastName"><br>
+                <label for="username"><b>Username:</b></label><br>
+                <input type="text" name="username"><br>
+                
+                <label for="password"><b>Password:</b></label><br>
+                <input type="text" name="password"><br>
+                
+                <label for="email"><b>Email:</b></label><br>
+                <input type="text" name="email"><br>
+                
+                <label for="firstName"><b>First Name:</b></label><br>
+                <input type="text" name="firstName"><br>
+                
+                <label for="lastName"><b>Last Name:</b></label><br>
+                <input type="text" name="lastName"><br>
+                
                 <input type="hidden" name="action" value="add">
                 <input type="submit" value="Save">
             </form>
@@ -75,15 +84,31 @@
         <c:if test="${usernameSelected != null}">
             <h2>Edit User</h2>
             <form method="POST" action="admin">
-                Username: <input type="text" name="username" value="${usernameSelected.username}" readonly><br>
-                Password: <input type="password" name="password" value="${usernameSelected.password}"><br>
-                Email: <input type="text" name="email" value="${usernameSelected.email}"><br>
-                First Name: <input type="text" name="firstName" value="${usernameSelected.firstName}"><br>
-                Last Name: <input type="text" name="lastName" value="${usernameSelected.lastName}"><br>
+                <label for="username"><b>Username:</b></label><br>
+                <input type="text" name="username" value="${usernameSelected.username}" readonly><br>
+                
+                <label for="password"><b>Password:</b></label><br>
+                <input type="text" name="password" value="${usernameSelected.password}"><br>
+                
+                <label for="email"><b>Email:</b></label><br>
+                <input type="text" name="email" value="${usernameSelected.email}"><br>
+                
+                <label for="firstName"><b>First Name:</b></label><br>
+                <input type="text" name="firstName" value="${usernameSelected.firstName}"><br>
+                
+                <label for="lastName"><b>Last Name:</b></label><br>
+                <input type="text" name="lastName" value="${usernameSelected.lastName}"><br>
+                
+                <label for="activeStatus"><b>Active Status: </b></label><br>
+                <select name="activeStatus">
+                    <option value="true">True</option>
+                    <option value="false">False</option>
+                </select><br>
                 <input type="hidden" name="action" value="edit">
                 <input type="submit" value="Save">
             </form>
         </c:if>
+        </div>
         ${addM}
         ${errorM}
         ${editM}

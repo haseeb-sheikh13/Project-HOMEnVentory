@@ -2,7 +2,10 @@ package services;
 
 import database.UserDB;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.User;
+import servlets.AdminServlet;
 
 /**
  *
@@ -30,7 +33,7 @@ public class UserService
         }
         catch (Exception e)
         {
-            
+            Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, e);
         }
         return null;
     }
@@ -51,7 +54,7 @@ public class UserService
         user.setEmail(email);
         user.setFirstName(firstName);
         user.setLastName(lastName);
-        user.setActive(true);
+        user.setActive(active);
         return userDB.update(user);
     }
 

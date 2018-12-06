@@ -1,0 +1,104 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Dec 5, 2018, 9:28:02 PM
+    Author     : 687159
+*/
+
+/* 
+    CSS for the Navigation bar
+*/
+ul 
+{
+    list-style-type: none; 
+    margin: 0px; 
+    padding: 5px; 
+    overflow: hidden; 
+    background-color:#FE1212;
+}
+
+li a:hover 
+{
+    background-color: #cc0000
+}
+
+li 
+{
+    float: left;
+    border-right: 2px solid #ffffff;
+}
+
+li h1 
+{
+    display: block; 
+    color: white; 
+    text-align: center; 
+    padding: 5px; 
+}
+
+li a 
+{
+    display: block; 
+    color: white; 
+    text-align: left; 
+    padding: 35px; 
+    font-size: 20px;
+}
+
+/* 
+    CSS for the Items table
+*/
+table 
+{
+    border-collapse: collapse;
+    width:20%;
+    padding:5px;
+}
+
+table, th, td 
+{
+    border: 1px solid black;
+}
+
+table, th, td, input
+{
+    text-align: center; 
+}
+
+tr:hover 
+{
+    background-color: #99ccff;
+}
+
+th 
+{
+    background-color: #FE1212;
+    color: white;
+}
+
+/* 
+    CSS for the Add and Edit item forms
+*/
+
+input[type=text]
+{
+    width: 15%; 
+    padding: 5px; 
+    margin: 5px 15px 5px; 
+    background: #f1f1f1;
+}
+
+input[type=text]:hover
+{
+    background-color: #99ccff;
+}
+
+input[type=text]:focus
+{
+    background-color: #ddd; 
+    outline: crimson; 
+    border: 1px solid black; 
+}

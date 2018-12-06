@@ -1,0 +1,104 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Dec 5, 2018, 6:15:33 PM
+    Author     : 687159
+*/
+
+/* 
+    CSS for the Navigation bar
+*/
+ul 
+{
+    list-style-type: none; 
+    margin: 0px; 
+    padding: 5px; 
+    overflow: hidden; 
+    background-color:#FE1212;
+}
+
+li a:hover 
+{
+    background-color: #cc0000
+}
+
+li 
+{
+    float: left;
+    border-right: 2px solid #ffffff;
+}
+
+li h1 
+{
+    display: block; 
+    color: white; 
+    padding: 5px; 
+}
+
+li a 
+{
+    display: block; 
+    color: white; 
+    text-align: left; 
+    padding: 35px; 
+    font-size: 20px;
+}
+
+/*
+    CSS for login form
+*/
+form 
+{
+    border: 3px solid #0066ff;
+    padding: 15px; 
+    margin: 10px 250px 75px 400px; 
+    text-align: center; 
+}
+
+form:hover
+{
+    background-color: #c2c2a3;
+}
+
+input[type=text], input[type=password] 
+{
+    width: 25%;
+    padding: 5px; 
+    margin: 10px 15px 10px; 
+    background: #f1f1f1;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+input[type=text]:hover, input[type=password]:hover 
+{
+    background-color: #99ccff;
+}
+
+input[type=text]:focus, input[type=password]:focus 
+{
+    background-color: #ddd; 
+    outline: crimson; 
+    border: 1px solid black; 
+}
+
+button 
+{
+    background-color: #0066ff;
+    color: white;
+    padding: 15px 20px;
+    margin: 10px ;
+    border: none;
+    cursor: pointer;
+    width: 50%;
+}
+
+button:hover 
+{
+    opacity: 0.8;
+}

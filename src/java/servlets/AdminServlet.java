@@ -56,6 +56,18 @@ public class AdminServlet extends HttpServlet
         }
         session.setAttribute("users", users);
         
+        if(request.getParameter("inventory") !=null)
+        {
+            response.sendRedirect("inventory"); 
+            return;
+        }
+        
+        if(request.getParameter("categories") !=null)
+        {
+            response.sendRedirect("categories"); 
+            return;
+        }
+        
         if(request.getParameter("logout") !=null)
         {
             session.invalidate();
@@ -64,12 +76,7 @@ public class AdminServlet extends HttpServlet
             return;
         }
         
-        if(request.getParameter("inventory") !=null)
-        {
-            session.invalidate();
-            response.sendRedirect("inventory"); 
-            return;
-        }
+        
         
         getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response); 
     }
@@ -94,7 +101,8 @@ public class AdminServlet extends HttpServlet
             {
                 case "add":
                     if(!(username == null || username.equals("")) && !(password == null || password.equals("")) 
-                        && !(email == null || email.equals("")) && !(firstName == null || firstName.equals("")) && !(lastName == null || lastName.equals("")))
+                        && !(email == null || email.equals("")) && !(firstName == null || firstName.equals("")) 
+                            && !(lastName == null || lastName.equals("")))
                     {                   
                         us.insert(username, password, email, firstName, lastName, active, isAdmin);
                         request.setAttribute("addM", "New User added.");
@@ -107,6 +115,8 @@ public class AdminServlet extends HttpServlet
                     }
                     break;
                 case "edit":
+                    String activeStatus = request.getParameter("activeStatus");
+                    active = Boolean.valueOf(activeStatus);
                     us.update(username, password, email, firstName, lastName, active, isAdmin);
                     request.setAttribute("edit", "User has been updated.");
                     getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response); 
