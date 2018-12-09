@@ -1,9 +1,3 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-
 /* 
     Created on : Dec 5, 2018, 4:52:44 PM
     Author     : 687159
@@ -49,54 +43,160 @@ li a
     font-size: 20px;
 }
 
-/* 
-    CSS for the Items table
+/*
+    CSS for Div class InventoryTable
 */
-table 
+.inventoryForm 
 {
+    float: left;
+    text-align: center; 
+    border: 3px solid #0066ff;
+    position: static;
+    width: 50%;
+    overflow: auto;
+}
+
+.inventoryForm table 
+{
+    text-align: center; 
     border-collapse: collapse;
-    width:35%;
-    padding:5px;
+    width:90%;
+    margin-top: 10px;
+    margin-bottom: 25px;
+    margin-left: 20px;
+    margin-right: 0px;
 }
 
-table, th, td 
+.inventoryForm table, th, td 
 {
-    border: 1px solid black;
+    border: 1px solid #0066ff;
+    text-align: center; 
 }
 
-tr:hover 
+.inventoryForm tr:hover 
 {
     background-color: #99ccff;
 }
 
-th 
+.inventoryForm th 
 {
     background-color: #FE1212;
     color: white;
 }
 
-/* 
-    CSS for the Add and Edit item forms
-*/
-
-input[type=text], input[type=password] 
+.inventoryForm:hover
 {
-    width: 15%; 
-    padding: 5px; 
+    background-color: #c2c2a3;
+    width: 50%;
+    
+}
+.inventoryForm input[type=text] 
+{
+    width: 50%; 
+     
     margin: 5px 15px 5px; 
-    
-    
     background: #f1f1f1;
+    border: 1px solid #0066ff;
 }
 
-input[type=text]:hover, input[type=password]:hover 
+.inventoryForm input[type=text]:hover
 {
     background-color: #99ccff;
 }
 
-input[type=text]:focus, input[type=password]:focus 
+.inventoryForm input[type=text]:focus
 {
     background-color: #ddd; 
     outline: crimson; 
-    border: 1px solid black; 
+    border: 1px solid #0066ff; 
+}
+
+/*
+    CSS for Div class UserInfoTable
+*/
+.usersForm
+{
+    float: right;
+    text-align: center; 
+    border: 3px solid #0066ff;
+    width: 49%;
+    overflow: auto;
+    position: static;
+    margin-top: 0px;
+    
+}
+
+.usersForm table 
+{
+    text-align: center; 
+    border-collapse: collapse;
+    width:90%;
+    margin-top: 10px;
+    margin-bottom: 25px;
+    margin-left: 25px;
+    margin-right: 0px;
+}
+
+.usersForm table, th, td 
+{
+    border: 1px solid #0066ff;
+    text-align: center; 
+}
+
+.usersForm tr:hover 
+{
+    background-color: #99ccff;
+}
+
+.usersForm th 
+{
+    background-color: #FE1212;
+    color: white;
+}
+
+/*
+    CSS for Div class UserForms
+*/
+
+.usersForm input[type=text] 
+{
+    width: 50%; 
+    padding: 5px; 
+    margin: 5px 15px 5px; 
+    background: #f1f1f1;
+    border: 1px solid #0066ff; 
+}
+
+.usersForm input[type=text]:hover
+{
+    background-color: #99ccff;
+}
+
+.usersForm input[type=text]:focus
+{
+    background-color: #ddd; 
+    outline: crimson; 
+    
+}
+.usersForm:hover
+{
+    background-color: #c2c2a3;
+    width: 49%;
+}
+
+/*
+    CSS for Select Option menu
+*/
+.inventoryForm select
+{
+    text-align: center;
+   border: 1px solid #0066ff;
+   color: #000000;
+   font-size: inherit;
+   margin: 20px;
+   overflow: hidden;
+   padding: 5px 10px;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   width: 50%;
 }

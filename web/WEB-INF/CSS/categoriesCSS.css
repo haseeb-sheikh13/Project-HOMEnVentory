@@ -48,57 +48,83 @@ li a
     font-size: 20px;
 }
 
-/* 
-    CSS for the Items table
+/*
+    CSS for Div class UserInfoTable
 */
-table 
+.categoryTable
 {
+    float: left;
+    text-align: center; 
+    border: 3px solid #0066ff;
+    width: 50%;
+    overflow: auto;
+    margin-top: 0px;
+}
+
+.categoryTable table 
+{
+    text-align: center; 
     border-collapse: collapse;
-    width:20%;
-    padding:5px;
+    width:90%;
+    margin-top: 10px;
+    margin-bottom: 25px;
+    margin-left: 25px;
+    margin-right: 0px;
 }
 
-table, th, td 
+.categoryTable table, th, td 
 {
-    border: 1px solid black;
-}
-
-table, th, td, input
-{
+    border: 1px solid #0066ff;
     text-align: center; 
 }
 
-tr:hover 
+.categoryTable tr:hover 
 {
     background-color: #99ccff;
 }
 
-th 
+.categoryTable th 
 {
     background-color: #FE1212;
     color: white;
 }
 
-/* 
-    CSS for the Add and Edit item forms
+/*
+    CSS for Div class UserForms
 */
-
-input[type=text]
+.categoriesForms 
 {
-    width: 15%; 
-    padding: 5px; 
-    margin: 5px 15px 5px; 
-    background: #f1f1f1;
+    float: right;
+    text-align: center; 
+    border: 3px solid #0066ff;
+    width: 49%;
+    overflow: auto;
+    margin-top: 0px;
+    
 }
 
-input[type=text]:hover
+.categoriesForms input[type=text] 
+{
+    width: 50%; 
+    padding: 5px; 
+    margin: 5px 20px 5px; 
+    background: #f1f1f1;
+    border: 1px solid #0066ff; 
+}
+
+.categoriesForms input[type=text]:hover
 {
     background-color: #99ccff;
 }
 
-input[type=text]:focus
+.categoriesForms input[type=text]:focus
 {
     background-color: #ddd; 
     outline: crimson; 
-    border: 1px solid black; 
+    
+}
+.categoriesForms:hover
+{
+    background-color: #c2c2a3;
+    width: 49%;
 }

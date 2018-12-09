@@ -141,15 +141,24 @@ public class CategoriesServlet extends HttpServlet
                     }
                     break;
                 case "edit":
-                    String hiddenCat = request.getParameter("hiddenCat");
-                    categoryID = Integer.parseInt(hiddenCat);
+                    if(!(categoryName == null || categoryName.equals("")))
+                    {
+                        
+                        String hiddenCat = request.getParameter("hiddenCat");
+                        categoryID = Integer.parseInt(hiddenCat);
+                        category = cs.getCategory(categoryID);
+                        category.setCategoryID(categoryID);
+                        category.setCategoryName(categoryName);
+                        cs.update(categoryID, categoryName);
+                        request.setAttribute("editM", "Category has been updated."); 
+                        getServletContext().getRequestDispatcher("/WEB-INF/categories.jsp").forward(request, response);
+                    }
+                    else
+                    {
+                        request.setAttribute("errorM", "Please fill in the required fields.");
+                        getServletContext().getRequestDispatcher("/WEB-INF/categories.jsp").forward(request, response);
+                    }
                     
-                    category = cs.getCategory(categoryID);
-                    category.setCategoryID(categoryID);
-                    category.setCategoryName(categoryName);
-                    cs.update(categoryID, categoryName);
-                    request.setAttribute("editM", "Category has been updated."); 
-                    getServletContext().getRequestDispatcher("/WEB-INF/categories.jsp").forward(request, response);
                     break;
                 default:
                     break;

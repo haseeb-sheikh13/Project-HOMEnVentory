@@ -23,7 +23,8 @@
             <li><a href="categories?refresh">Refresh</a></li>
             <li><a href="categories?logout">Logout</a></li>
         </ul>
-
+        
+        <div class="categoryTable">
         <h2>Categories</h2>      
             <table>
                 <tr>
@@ -43,6 +44,7 @@
                 </tr>
             </c:forEach>
         </table>
+        </div>
         
         <div class="categoriesForms">
         <c:if test="${categorySelected == null}">
@@ -67,6 +69,9 @@
                 <input type="submit" value="Edit Category">
             </form>
         </c:if>
+            <h3>${addM}</h3>
+            <h3>${errorM}</h3>
+            <h3>${editM}
         </div>
     </body>
 </html>

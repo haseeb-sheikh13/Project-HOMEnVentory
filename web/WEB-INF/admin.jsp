@@ -23,6 +23,7 @@
             <li><a href="admin?refresh">Refresh</a></li>
             <li><a href="admin?logout">Logout</a></li>
         </ul>
+        <div class="usersTable">
         <h2>Welcome, ${username}</h2>
         <h2>Manage Users</h2>      
             <table>
@@ -31,6 +32,7 @@
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Active</th>
+                    <th>Admin</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
@@ -40,6 +42,7 @@
                         <td>${usr.firstName}</td>
                         <td>${usr.lastName}</td>
                         <td>${usr.active}</td>
+                        <td>${usr.isAdmin}</td>
                         <td>
                             <form method="GET" action="admin">
                                 <input type="submit" value="Edit">
@@ -57,6 +60,9 @@
                     </tr>
                 </c:forEach>
             </table>
+        <h3>${deleteM}</h3>
+        <h3>${errorDeleteM}</h3>
+        </div>
         
         <div class="userForms">
         <c:if test="${usernameSelected == null}">
@@ -76,6 +82,12 @@
                 
                 <label for="lastName"><b>Last Name:</b></label><br>
                 <input type="text" name="lastName"><br>
+                
+                <label for="adminStatus"><b>Admin Status: </b></label><br>
+                <select name="adminStatus">
+                    <option value="true">True</option>
+                    <option value="false">False</option>
+                </select><br>
                 
                 <input type="hidden" name="action" value="add">
                 <input type="submit" value="Save">
@@ -104,14 +116,21 @@
                     <option value="true">True</option>
                     <option value="false">False</option>
                 </select><br>
+                
+                <label for="adminStatus"><b>Admin Status: </b></label><br>
+                <select name="adminStatus">
+                    <option value="true">True</option>
+                    <option value="false">False</option>
+                </select><br>
                 <input type="hidden" name="action" value="edit">
                 <input type="submit" value="Save">
             </form>
         </c:if>
+            <h3>${addM}</h3>
+            <h3>${editM}</h3>
+            <h3>${errorM}</h3>
         </div>
-        ${addM}
-        ${errorM}
-        ${editM}
-        ${deleteM}
+        
+        
     </body>
 </html>

@@ -18,10 +18,9 @@
         <ul>
             <li><h1>HOMEnVentory</h1></li>
         </ul>
-        
-        <h2>Login</h2>
         <form method="POST" action="login">
             <div class="loginForm">
+                <h2>Login</h2>
                 <label for="username"><b>Username:</b></label><br>
                 <input type="text" placeholder="Enter Username" name="username" required><br>
 
@@ -31,9 +30,9 @@
                 <button type="submit">Login</button>
             </div>
             <div class="notifications">
-                ${errorM}
-                ${inactiveM}
-                ${logM}
+                <h3>${errorM}</h3>
+                <h3>${inactiveM}</h3>
+                <h3>${logM}</h3>
             </div>
             
             <div class="registrationForm" style="background-color:#f1f1f1">

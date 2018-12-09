@@ -55,6 +55,7 @@ public class UserService
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setActive(active);
+        user.setIsAdmin(isAdmin);
         return userDB.update(user);
     }
 
@@ -74,7 +75,7 @@ public class UserService
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setActive(true);
-        user.setIsAdmin(false);
+        user.setIsAdmin(isAdmin);
         return userDB.insert(user);
     }
 }

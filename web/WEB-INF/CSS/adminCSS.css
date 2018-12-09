@@ -7,28 +7,10 @@ and open the template in the editor.
     Created on : Dec 5, 2018, 1:49:29 PM
     Author     : 687159
 */
-table 
-{
-    border-collapse: collapse;
-    width:35%;
-    padding:5px;
-}
 
-table, th, td 
-{
-    border: 1px solid black;
-}
-
-tr:hover 
-{
-    background-color: #99ccff;
-}
-
-th 
-{
-    background-color: #FE1212;
-    color: white;
-}
+/* 
+    CSS for the Navigation bar
+*/
 
 ul 
 {
@@ -37,6 +19,7 @@ ul
     padding: 5px; 
     overflow: hidden; 
     background-color:#FE1212;
+    border: 2px solid #0066ff; 
 }
 
 li a:hover 
@@ -67,25 +50,106 @@ li a
     font-size: 20px;
 }
 
-input[type=text], input[type=password] 
+h2{
+    text-align: center;
+}
+/* 
+    CSS for the Users table
+*/
+
+.usersTable 
 {
-    width: 15%; 
-    padding: 5px; 
-    margin: 5px 15px 5px; 
-    
-    
-    background: #f1f1f1;
+    float: left;
+    text-align: center; 
+    border: 3px solid #0066ff;
+    position: static;
+    width: 50%;
+    overflow: auto;
 }
 
-input[type=text]:hover, input[type=password]:hover 
+.usersTable table
+{
+    text-align: center; 
+    border-collapse: collapse;
+    width:90%;
+    margin-top: 10px;
+    margin-bottom: 25px;
+    margin-left: 20px;
+    margin-right: 0px;
+}
+
+.usersTable table, th, td 
+{
+    border: 2px solid #0066ff; 
+}
+
+.usersTable tr:hover 
 {
     background-color: #99ccff;
 }
 
-input[type=text]:focus, input[type=password]:focus 
+.usersTable th 
+{
+    background-color: #FE1212;
+    color: white;
+}
+
+/* 
+    CSS for the Add and Edit User forms
+*/
+
+/*
+    CSS for userForms
+*/
+.userForms
+{
+    float:right;
+    width: 49%;
+    text-align: center; 
+    border: 3px solid #0066ff;
+    overflow: auto;
+}
+.userForms:hover
+{
+    background-color: #c2c2a3;
+    width: 49%;
+    
+}
+
+.userForms input[type=text]
+{
+    width: 50%; 
+    padding: 5px; 
+    margin: 5px 15px 5px; 
+    background: #f1f1f1;
+    border: 1px solid #0066ff; 
+}
+
+.userForms input[type=text]:hover
+{
+    background-color: #99ccff;
+    width: 50%; 
+    padding: 5px; 
+    margin: 5px 15px 5px; 
+}
+
+.userForms input[type=text]:focus
 {
     background-color: #ddd; 
     outline: crimson; 
-    border: 1px solid black; 
+    border: 1px solid #0066ff;  
 }
 
+.userForms select
+{
+    text-align: center;
+    border: 1px solid #0066ff;
+    color: #000000;
+    font-size: inherit;
+    margin: 5px;
+    overflow: hidden;
+    padding: 5px 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 50%;
+}

@@ -75,15 +75,14 @@ public class AdminServlet extends HttpServlet
             getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
             return;
         }
-        
-        
-        
         getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response); 
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
     {
+        HttpSession session = request.getSession();
+        
         String action = request.getParameter("action");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -104,6 +103,8 @@ public class AdminServlet extends HttpServlet
                         && !(email == null || email.equals("")) && !(firstName == null || firstName.equals("")) 
                             && !(lastName == null || lastName.equals("")))
                     {                   
+                        String adminStatus = request.getParameter("adminStatus");
+                        isAdmin = Boolean.valueOf(adminStatus);
                         us.insert(username, password, email, firstName, lastName, active, isAdmin);
                         request.setAttribute("addM", "New User added.");
                         getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);   
@@ -115,18 +116,42 @@ public class AdminServlet extends HttpServlet
                     }
                     break;
                 case "edit":
-                    String activeStatus = request.getParameter("activeStatus");
-                    active = Boolean.valueOf(activeStatus);
-                    us.update(username, password, email, firstName, lastName, active, isAdmin);
-                    request.setAttribute("edit", "User has been updated.");
-                    getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response); 
+                    if(!(password == null || password.equals("")) 
+                       && !(email == null || email.equals("")) && !(firstName == null || firstName.equals("")) 
+                           && !(lastName == null || lastName.equals("")))
+                    {                   
+                        String activeStatus = request.getParameter("activeStatus");
+                        active = Boolean.valueOf(activeStatus);
+                        String adminStatus = request.getParameter("adminStatus");
+                        isAdmin = Boolean.valueOf(adminStatus);
+                        us.update(username, password, email, firstName, lastName, active, isAdmin);
+                        request.setAttribute("editM", "User has been updated.");
+                        getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
+                    }
+                    else
+                    {
+                        request.setAttribute("errorM", "Please enter all of the required fields.");
+                        getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
+                    }
+                     
                     break;
                 case "delete":
+                    String userLogged = (String) session.getAttribute("username");
                     String usernameSelected = request.getParameter("usernameSelected");
-                    us.delete(usernameSelected);
-                    request.setAttribute("deleteM", "User has been deleted.");
-                    getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response); 
-                    break;
+                    User user = us.get(usernameSelected);
+                    if (user.getUsername() == userLogged || user.getIsAdmin() == true)
+                    {
+                        request.setAttribute("errorDeleteM", "Can't delete this user.");
+                        getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
+                    }
+                    else
+                    {
+                        us.delete(usernameSelected);
+                        request.setAttribute("deleteM", "User has been deleted.");
+                        getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response); 
+                        break;
+                        
+                    }
                 default:
                     break;
             }
