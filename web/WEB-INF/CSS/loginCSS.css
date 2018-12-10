@@ -18,6 +18,7 @@ ul
     padding: 5px; 
     overflow: hidden; 
     background-color:#FE1212;
+    border: 2px solid #0066ff; 
 }
 
 li a:hover 
@@ -51,7 +52,7 @@ form
 
 form:hover
 {
-    background-color: #c2c2a3;
+    background-color: #e6f2ff;
 }
 
 input[type=text], input[type=password] 
@@ -105,12 +106,4 @@ button:hover
 .registrationForm 
 {
     padding: 16px;
-}
-
-.notifications
-{
-    padding: 15px;
-    margin: 5px 190px 25px; 
-    width: 50%;
-    text-align: center;
 }

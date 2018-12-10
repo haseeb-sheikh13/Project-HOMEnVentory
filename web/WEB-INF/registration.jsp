@@ -45,6 +45,7 @@
             
             <div class="notifications">
                 ${registerM}
+                ${errorM}
             </div>
         </form>
     </body>

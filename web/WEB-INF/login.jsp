@@ -28,8 +28,6 @@
                 <input type="password" placeholder="Enter Password" name="password" required><br>
 
                 <button type="submit">Login</button>
-            </div>
-            <div class="notifications">
                 <h3>${errorM}</h3>
                 <h3>${inactiveM}</h3>
                 <h3>${logM}</h3>

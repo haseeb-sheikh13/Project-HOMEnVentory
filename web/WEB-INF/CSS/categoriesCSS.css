@@ -18,6 +18,7 @@ ul
     padding: 5px; 
     overflow: hidden; 
     background-color:#FE1212;
+    border: 2px solid #0066ff; 
 }
 
 li a:hover 
@@ -107,7 +108,7 @@ li a
 {
     width: 50%; 
     padding: 5px; 
-    margin: 5px 20px 5px; 
+    margin: 5px 15px 5px; 
     background: #f1f1f1;
     border: 1px solid #0066ff; 
 }
@@ -125,6 +126,6 @@ li a
 }
 .categoriesForms:hover
 {
-    background-color: #c2c2a3;
+    background-color: #e6f2ff;
     width: 49%;
 }

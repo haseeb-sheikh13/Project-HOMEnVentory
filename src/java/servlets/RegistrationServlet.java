@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.User;
 import services.UserService;
 
 /**
@@ -43,7 +44,8 @@ public class RegistrationServlet extends HttpServlet
         String lastName = request.getParameter("lastName");
         boolean active = false;
         boolean isAdmin = false;
-
+        
+        User user = new User();
         UserService us = new UserService();
 
         try 
@@ -53,10 +55,19 @@ public class RegistrationServlet extends HttpServlet
                 case "register":
                     if(!(username == null || username.equals("")) && !(password == null || password.equals("")) 
                         && !(email == null || email.equals("")) && !(firstName == null || firstName.equals("")) && !(lastName == null || lastName.equals("")))
-                    {                   
-                        us.insert(username, password, email, firstName, lastName, active, isAdmin);
-                        request.setAttribute("registerM", "You have been registered. Please go back to login.");
-                        getServletContext().getRequestDispatcher("/WEB-INF/registration.jsp").forward(request, response);   
+                    {   
+                        user = us.get(username);
+                        if(user != null)
+                        {
+                            request.setAttribute("errorM", "Username already exists. Please change the username.");
+                            getServletContext().getRequestDispatcher("/WEB-INF/registration.jsp").forward(request, response);
+                        }
+                        else
+                        {
+                            us.insert(username, password, email, firstName, lastName, active, isAdmin);
+                            request.setAttribute("registerM", "You have been registered. Please go back to login.");
+                            getServletContext().getRequestDispatcher("/WEB-INF/registration.jsp").forward(request, response);
+                        }
                     }
                     else
                     {

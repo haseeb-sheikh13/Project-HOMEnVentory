@@ -66,7 +66,7 @@ public class LoginServlet extends HttpServlet
             }
             else
             {
-                request.setAttribute("errorM", "User does not exist.");
+                request.setAttribute("errorM", "Incorrect username or password.");
                 getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
             }
         }

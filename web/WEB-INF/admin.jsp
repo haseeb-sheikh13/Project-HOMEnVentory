@@ -109,7 +109,7 @@
                 <input type="text" name="firstName" value="${usernameSelected.firstName}"><br>
                 
                 <label for="lastName"><b>Last Name:</b></label><br>
-                <input type="text" name="lastName" value="${usernameSelected.lastName}"><br>
+                <input type="text" name="lastName" value=""><br>
                 
                 <label for="activeStatus"><b>Active Status: </b></label><br>
                 <select name="activeStatus">

@@ -91,7 +91,7 @@ public class AdminServlet extends HttpServlet
         String lastName = request.getParameter("lastName");
         boolean active = false;
         boolean isAdmin = false;
-
+        User user = new User();
         UserService us = new UserService();
 
         try 
@@ -103,11 +103,21 @@ public class AdminServlet extends HttpServlet
                         && !(email == null || email.equals("")) && !(firstName == null || firstName.equals("")) 
                             && !(lastName == null || lastName.equals("")))
                     {                   
-                        String adminStatus = request.getParameter("adminStatus");
-                        isAdmin = Boolean.valueOf(adminStatus);
-                        us.insert(username, password, email, firstName, lastName, active, isAdmin);
-                        request.setAttribute("addM", "New User added.");
-                        getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);   
+                        user = us.get(username);
+                        if(user != null)
+                        {
+                            request.setAttribute("errorM", "Username already exists. Please change the username.");
+                            getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
+                        }
+                        else
+                        {
+                            String adminStatus = request.getParameter("adminStatus");
+                            isAdmin = Boolean.valueOf(adminStatus);
+                            us.insert(username, password, email, firstName, lastName, active, isAdmin);
+                            request.setAttribute("addM", "New User added.");
+                            getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
+                        }
+                           
                     }
                     else
                     {
@@ -138,7 +148,7 @@ public class AdminServlet extends HttpServlet
                 case "delete":
                     String userLogged = (String) session.getAttribute("username");
                     String usernameSelected = request.getParameter("usernameSelected");
-                    User user = us.get(usernameSelected);
+                    user = us.get(usernameSelected);
                     if (user.getUsername() == userLogged || user.getIsAdmin() == true)
                     {
                         request.setAttribute("errorDeleteM", "Can't delete this user.");
