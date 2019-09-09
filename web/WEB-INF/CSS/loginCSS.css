@@ -8,36 +8,21 @@ and open the template in the editor.
     Author     : 687159
 */
 
+body
+{
+    background-image: url(inventory.jpg);
+}
+
 /* 
     CSS for the Navigation bar
 */
-ul 
-{
-    list-style-type: none; 
-    margin: 0px; 
-    padding: 5px; 
-    overflow: hidden; 
-    background-color:#FE1212;
-    border: 2px solid #0066ff; 
-}
+
 
 li a:hover 
 {
     background-color: #cc0000
 }
 
-li 
-{
-    float: left;
-    border-right: 2px solid #ffffff;
-}
-
-li h1 
-{
-    display: block; 
-    color: white; 
-    padding: 5px; 
-}
 
 /*
     CSS for login form
@@ -98,6 +83,23 @@ button:hover
 /*
     CSS for Div Classes
 */
+
+
+.header ul
+{
+    list-style-type: none;
+    background-color:#e9ab73;
+    border: 2px 
+    solid #b7b7b7;
+    
+}
+
+.header li
+{
+    text-align: center;
+    color: #1a1a1a;
+}
+
 .loginForm 
 {
     padding: 16px;

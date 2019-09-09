@@ -43,6 +43,11 @@ public class InventoryService
         return itemDB.getItem(itemID);
     }
     
+    public Item getItemByName(String itemName) throws Exception
+    {
+        return itemDB.getItemName(itemName);
+    }
+    
     public List<Category> getAllCategories() throws Exception 
     {
         return catDB.getAll();

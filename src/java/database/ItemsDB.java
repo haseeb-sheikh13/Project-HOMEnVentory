@@ -85,6 +85,20 @@ public class ItemsDB
         }
     }
     
+    public Item getItemName(String itemName)throws HomeInventoryDBException
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        try 
+        {
+            Item item = em.find(Item.class, itemName);
+            return item;
+        } 
+        finally 
+        {
+            em.close();
+        }
+    }
+    
     public static int delete(Item item)throws HomeInventoryDBException
     {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();

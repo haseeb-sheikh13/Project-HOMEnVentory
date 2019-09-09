@@ -69,6 +69,24 @@ public class InventoryServlet extends HttpServlet
                 getServletContext().getRequestDispatcher("/WEB-INF/inventory.jsp").forward(request, response);
             }
         }
+        else if(action != null && action.equals("search"))
+        {
+            String searchItem = request.getParameter("searchItem");
+            try 
+            {
+                Item searchedItem = is.getItemByName(searchItem);
+                searchedItem.getItemName();
+                session.setAttribute("searchItem", searchedItem);
+                getServletContext().getRequestDispatcher("/WEB-INF/inventory.jsp").forward(request, response);
+                return;
+            } 
+            catch(Exception ex)
+            {
+                Logger.getLogger(InventoryServlet.class.getName()).log(Level.SEVERE, null, ex);
+                getServletContext().getRequestDispatcher("/WEB-INF/inventory.jsp").forward(request, response);
+            }
+
+        }
             
         List<Item> items = null;    
         try 

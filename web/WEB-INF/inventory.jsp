@@ -28,38 +28,79 @@
             
         <div class="inventoryForm">
             <h2>Inventory for ${username}</h2>
-            <table>
-                
-                <tr>
-                    <th>Category</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-                <c:forEach var="itms" items="${items}">
-                <tr>
-                    <td>${itms.category.categoryName}</td>
-                    <td>${itms.itemName}</td>
-                    <td><fmt:formatNumber value="${itms.price}" type="currency"/></td>
-                    <td>
-                        <form method="GET" action="inventory">
-                            <input type="submit" value="Edit">
-                            <input type="hidden" name="action" value="edit">
-                            <input type="hidden" name="itemSelected" value="${itms.itemID}">
-                        </form>
-                    </td>
-                    <td>
-                        <form method="POST" action="inventory">
-                            <input type="hidden" name="action" value="delete">
-                            <input type="hidden" name="itemSelected" value="${itms.itemID}">
-                            <input type="submit" value="Delete">
-                        </form>
-                    </td>
-                </tr>
-                </c:forEach>
-            </table>
+            
+            
+            <c:if test="${searchItem == null}">
+                <table>
 
+                    <tr>
+                        <th>Category</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    <c:forEach var="itms" items="${items}">
+                    <tr>
+                        <td>${itms.category.categoryName}</td>
+                        <td>${itms.itemName}</td>
+                        <td><fmt:formatNumber value="${itms.price}" type="currency"/></td>
+                        <td>
+                            <form method="GET" action="inventory">
+                                <input type="submit" value="Edit">
+                                <input type="hidden" name="action" value="edit">
+                                <input type="hidden" name="itemSelected" value="${itms.itemID}">
+                            </form>
+                        </td>
+                        <td>
+                            <form method="POST" action="inventory">
+                                <input type="hidden" name="action" value="delete">
+                                <input type="hidden" name="itemSelected" value="${itms.itemID}">
+                                <input type="submit" value="Delete">
+                            </form>
+                        </td>
+                    </tr>
+                    </c:forEach>
+                </table>
+                <form method="GET" action="inventory">
+                    Search Item: <input type="text" name="searchItem"><input type="submit" value="Search">
+                    <input type="hidden" name="action" value="search">
+                </form>
+            </c:if>
+            
+            <c:if test="${searchItem != null}">
+                <table>
+                    <tr>
+                        <th>Category</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    <c:forEach var="searched" items="${searchedItems}">
+                    <tr>
+                        <td>${searched.category.categoryName}</td>
+                        <td>${searched.itemName}</td>
+                        <td><fmt:formatNumber value="${searched.price}" type="currency"/></td>
+                        <td>
+                            <form method="GET" action="inventory">
+                                <input type="submit" value="Edit">
+                                <input type="hidden" name="action" value="edit">
+                                <input type="hidden" name="itemSelected" value="${searched.itemID}">
+                            </form>
+                        </td>
+                        <td>
+                            <form method="POST" action="inventory">
+                                <input type="hidden" name="action" value="delete">
+                                <input type="hidden" name="itemSelected" value="${searched.itemID}">
+                                <input type="submit" value="Delete">
+                            </form>
+                        </td>
+                    </tr>
+                    </c:forEach>
+                </table>
+            </c:if>
+            
             <c:if test="${itemSelected == null}">
                 <h2>Add Item</h2>
                 <form method="POST" action="inventory">

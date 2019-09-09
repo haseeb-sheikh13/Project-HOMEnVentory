@@ -14,10 +14,13 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>CPRG 352 - Final Project - HOMEnVentory</title>
     </head>
-    <body>
-        <ul>
-            <li><h1>HOMEnVentory</h1></li>
-        </ul>
+    <body background="bg1.jpg">
+        <div class="header">
+            <ul>
+                <li><h1>HOMEnVentory</h1></li>
+            </ul>
+        </div>
+        
         <form method="POST" action="login">
             <div class="loginForm">
                 <h2>Login</h2>
